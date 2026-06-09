@@ -1,0 +1,59 @@
+================================================================================
+APUNTE RÁPIDO DE GIT - COMANDOS MÁS UTILIZADOS
+================================================================================
+
+--- CONFIGURACIÓN INICIAL ---
+git config --global user.name "Tu Nombre" = Configura el nombre de usuario globalmente para tus commits.
+git config --global user.email "tu@email.com" = Configura el correo electrónico globalmente para tus commits.
+git config --global init.defaultBranch main = Establece "main" como el nombre de la rama por defecto al inicializar repositorios.
+
+--- INICIALIZACIÓN Y CLONACIÓN ---
+git init = Inicializa un nuevo repositorio de Git en la carpeta actual.
+git clone <url-del-repositorio> = Descarga un repositorio existente desde un servidor remoto (como GitHub) a tu máquina local.
+
+--- FLUJO DE TRABAJO BÁSICO (VER, AGREGAR, CONFIRMAR) ---
+git status = Muestra el estado del directorio de trabajo y del área de preparación (staging area) (archivos modificados, nuevos, etc.).
+git add <nombre-de-archivo> = Añade un archivo específico al área de preparación (staging area) para el próximo commit.
+git add . = Añade todos los archivos nuevos, modificados y eliminados del directorio actual al área de preparación.
+git commit -m "Mensaje explicativo" = Guarda los cambios que están en el área de preparación en el historial de commits con un mensaje descriptivo.
+git commit -am "Mensaje explicativo" = Agrega todos los archivos modificados ya rastreados y hace el commit en un solo paso.
+git log = Muestra el historial de commits del repositorio, ordenado cronológicamente desde el más reciente.
+git log --oneline = Muestra el historial de commits en un formato resumido de una sola línea por commit.
+
+--- TRABAJO CON RAMAS (BRANCHES) ---
+git branch = Lista todas las ramas locales de tu repositorio. La rama actual se resalta con un asterisco.
+git branch -a = Lista tanto las ramas locales como las remotas rastreadas.
+git branch <nombre-de-rama> = Crea una nueva rama local con el nombre especificado a partir de la rama actual.
+git checkout <nombre-de-rama> = Cambia de la rama actual a la rama especificada.
+git switch <nombre-de-rama> = Cambia de la rama actual a la rama especificada (alternativa moderna a checkout).
+git checkout -b <nombre-de-rama> = Crea una nueva rama y se cambia a ella automáticamente en un solo paso.
+git switch -c <nombre-de-rama> = Crea una nueva rama y se cambia a ella automáticamente (alternativa moderna a checkout -b).
+git branch -d <nombre-de-rama> = Elimina una rama local de forma segura (solo si ya se ha fusionado con la rama principal).
+git branch -D <nombre-de-rama> = Fuerza la eliminación de una rama local, incluso si tiene cambios sin fusionar.
+
+--- FUSIÓN DE RAMAS (MERGING) ---
+git merge <nombre-de-rama> = Fusiona la rama especificada en la rama actual (por ejemplo, si estás en main y ejecutas git merge dev, traes los cambios de dev a main).
+git merge --abort = Cancela el proceso de fusión actual en caso de que ocurran conflictos que no quieras resolver en ese momento.
+
+--- TRABAJO CON REMOTOS (GITHUB) ---
+git remote add origin <url-del-repositorio> = Conecta tu repositorio local con un repositorio remoto en GitHub, nombrándolo "origin".
+git remote -v = Muestra las URLs de los repositorios remotos configurados.
+git push -u origin <nombre-de-rama> = Sube la rama local por primera vez al repositorio remoto "origin" y la configura para que se rastree automáticamente en el futuro.
+git push = Sube los commits locales de la rama actual a su rama remota correspondiente en GitHub (una vez configurada con -u).
+git push origin <nombre-de-rama> = Sube la rama especificada al repositorio remoto sin configurar el rastreo por defecto.
+git push origin --delete <nombre-de-rama> = Elimina la rama especificada en el repositorio remoto (GitHub).
+git fetch = Descarga la información y el historial de cambios del repositorio remoto sin fusionar nada en tus ramas locales.
+git pull = Descarga los cambios del repositorio remoto y los fusiona directamente en la rama local actual (equivale a git fetch + git merge).
+
+--- DESHACER CAMBIOS Y CORRECCIONES ---
+git checkout -- <nombre-de-archivo> = Descarta los cambios no guardados en el área de preparación en un archivo específico (revierte al último commit).
+git restore <nombre-de-archivo> = Revierte un archivo en el directorio de trabajo al estado del último commit (alternativa moderna).
+git reset HEAD <nombre-de-archivo> = Quita un archivo del área de preparación (staging) pero conserva los cambios en tu directorio de trabajo.
+git reset --soft HEAD~1 = Deshace el último commit, pero conserva los cambios locales listos para ser editados y vueltos a confirmar.
+git reset --hard HEAD~1 = Deshace el último commit y destruye todos los cambios locales realizados en ese commit (usar con precaución).
+git revert <hash-de-commit> = Crea un nuevo commit que revierte exactamente los cambios introducidos por un commit anterior, sin alterar el historial.
+
+--- GUARDADO TEMPORAL (STASH) ---
+git stash = Guarda temporalmente tus cambios locales no confirmados para limpiar tu directorio de trabajo y poder cambiar de rama.
+git stash pop = Recupera los últimos cambios guardados temporalmente con git stash y los elimina de la lista de guardados.
+git stash list = Muestra la lista de todos los estados de cambios guardados temporalmente.
