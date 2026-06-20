@@ -1,0 +1,92 @@
+proyecto_campus_virtual/         # Carpeta raíz del repositorio git
+│
+├── manage.py                     # Script de administración de Django
+├── db.sqlite3                    # Base de datos local (desarrollo)
+│
+├── config/                       # Carpeta de configuración del proyecto (antes de renombrar "proyecto")
+│   ├── __init__.py
+│   ├── settings.py               # Configuración global, apps registradas y DB
+│   ├── urls.py                   # Enrutamiento principal del sistema
+│   ├── asgi.py
+│   └── wsgi.py
+│
+├── apps/                         # Directorio contenedor para modularizar el proyecto
+│   ├── __init__.py
+│   │
+│   ├── authentication/           # App para control de usuarios y perfiles
+│   │   ├── __init__.py
+│   │   ├── apps.py
+│   │   ├── admin.py
+│   │   ├── models/               # Carpeta para modelos (SRP)
+│   │   │   ├── __init__.py
+│   │   │   ├── usuario.py        # Custom User (AbstractUser)
+│   │   │   ├── estudiante.py     # Perfil Estudiante (OneToOne)
+│   │   │   └── profesor.py       # Perfil Profesor (OneToOne)
+│   │   ├── views/                # Carpeta para controladores
+│   │   │   ├── __init__.py
+│   │   │   ├── login.py
+│   │   │   └── registro.py
+│   │   └── forms/                # Formularios de validación de UI
+│   │       ├── __init__.py
+│   │       └── auth_forms.py
+│   │
+│   ├── carreras/                 # App para gestión estructural de carreras
+│   │   ├── __init__.py
+│   │   ├── apps.py
+│   │   ├── admin.py
+│   │   ├── models/
+│   │   │   ├── __init__.py
+│   │   │   ├── carrera.py        # Modelo Carrera
+│   │   │   ├── plan_estudio.py   # Modelo Plan de Estudio
+│   │   │   └── cargo_docente.py  # Cargos especiales en carreras
+│   │   ├── services/             # Casos de uso de carreras
+│   │   │   ├── __init__.py
+│   │   │   └── carrera_service.py
+│   │   └── views/
+│   │       ├── __init__.py
+│   │       └── carrera_views.py
+│   │
+│   ├── materias/                 # App para gestión académica de asignaturas
+│   │   ├── __init__.py
+│   │   ├── apps.py
+│   │   ├── models/
+│   │   │   ├── __init__.py
+│   │   │   ├── materia.py        # Modelo Materia básica
+│   │   │   ├── correlativa.py    # Modelo de relaciones correlativas
+│   │   │   ├── contenido.py      # Ejes temáticos y alcance
+│   │   │   └── comision.py       # Secciones anuales de materias
+│   │   └── views/
+│   │       ├── __init__.py
+│   │       └── materia_views.py
+│   │
+│   └── academico/                # App transaccional (Inscripciones, Notas)
+│       ├── __init__.py
+│       ├── apps.py
+│       ├── models/
+│       │   ├── __init__.py
+│       │   ├── inscripcion.py    # Registro de estudiante cursando comision
+│       │   └── regularidad.py    # Condición final en cursada
+│       ├── managers/             # Consultas complejas de BD (QuerySets)
+│       │   ├── __init__.py
+│       │   └── inscripcion_manager.py
+│       ├── services/             # LÓGICA CORE (Reglas SIU Guaraní)
+│       │   ├── __init__.py
+│       │   # Validador de correlativas e inscripción de alumnos (Caso de uso clave)
+│       │   └── inscripcion_service.py 
+│       └── views/
+│           ├── __init__.py
+│           ├── inscripciones.py
+│           └── actas_examen.py
+│
+├── templates/                    # Plantillas HTML globales
+│   ├── base.html                 # Estructura HTML5 base (Tailwind, Google Fonts y HTMX)
+│   ├── components/               # Componentes UI reutilizables (navbar, sidebars, alerts)
+│   ├── authentication/           # Templates de autenticación
+│   ├── carreras/
+│   └── academico/
+│
+└── static/                       # Archivos estáticos de desarrollo (CSS, JS, imágenes)
+    ├── css/
+    │   └── styles.css            # Archivo CSS con estilos personalizados y Tailwind
+    └── js/
+        └── main.js
