@@ -4,17 +4,16 @@ from django.db import models
 class Profesor(models.Model):
     nombre = models.CharField(max_length=100, verbose_name="Nombre")
     apellido = models.CharField(max_length=100, verbose_name="Apellido")
+    
+    dni_validator = RegexValidator(
+        regex=r'^[0-9]+$',
+        message="El DNI solo puede contener números."
+    )
     dni = models.CharField(
-        max_length=20,
-        unique=True,
+        max_length=20, 
+        unique=True, 
         verbose_name="DNI",
-        validators=[
-            RegexValidator(
-                regex=r'^\d+$',
-                message="El DNI solo debe contener números.",
-                code="invalid_dni"
-            )
-        ]
+        validators=[dni_validator]
     )
     titulo = models.CharField(max_length=200, verbose_name="Título")
 
