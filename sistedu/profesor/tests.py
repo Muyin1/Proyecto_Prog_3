@@ -26,7 +26,7 @@ class ProfesorModelTest(TestCase):
         self.assertIn('dni', context.exception.message_dict)
         self.assertEqual(
             context.exception.message_dict['dni'][0],
-            "El DNI solo debe contener números."
+            "El DNI solo puede contener números."
         )
 
     def test_dni_with_spaces_is_invalid(self):
