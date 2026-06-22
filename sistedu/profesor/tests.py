@@ -41,3 +41,60 @@ class ProfesorModelTest(TestCase):
         
         self.assertIn('dni', context.exception.message_dict)
 
+
+class ProfesorViewsTest(TestCase):
+    def setUp(self):
+        self.profesor = Profesor.objects.create(
+            nombre="Juan",
+            apellido="Perez",
+            dni="12345678",
+            titulo="Licenciado"
+        )
+
+    def test_list_view(self):
+        response = self.client.get('/profesores/')
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Juan")
+        self.assertContains(response, "Perez")
+
+    def test_create_view_get(self):
+        response = self.client.get('/profesores/nuevo/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_create_view_post(self):
+        data = {
+            'nombre': 'Maria',
+            'apellido': 'Gomez',
+            'dni': '87654321',
+            'titulo': 'Ingeniera'
+        }
+        response = self.client.post('/profesores/nuevo/', data)
+        self.assertRedirects(response, '/profesores/')
+        self.assertTrue(Profesor.objects.filter(dni='87654321').exists())
+
+    def test_update_view_get(self):
+        response = self.client.get(f'/profesores/editar/{self.profesor.pk}/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_update_view_post(self):
+        data = {
+            'nombre': 'Juan Carlos',
+            'apellido': 'Perez',
+            'dni': '12345678',
+            'titulo': 'Licenciado'
+        }
+        response = self.client.post(f'/profesores/editar/{self.profesor.pk}/', data)
+        self.assertRedirects(response, '/profesores/')
+        self.profesor.refresh_from_db()
+        self.assertEqual(self.profesor.nombre, 'Juan Carlos')
+
+    def test_delete_view_get(self):
+        response = self.client.get(f'/profesores/eliminar/{self.profesor.pk}/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_delete_view_post(self):
+        response = self.client.post(f'/profesores/eliminar/{self.profesor.pk}/')
+        self.assertRedirects(response, '/profesores/')
+        self.assertFalse(Profesor.objects.filter(pk=self.profesor.pk).exists())
+
+
