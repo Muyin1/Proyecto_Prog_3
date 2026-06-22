@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Profesor
-from .forms import ProfesorForm
+from profesor.models import Profesor
+from profesor.forms import ProfesorForm
 
 def profesor_list(request):
     profesores = Profesor.objects.all()
