@@ -1,0 +1,123 @@
+================================================================================
+GUÍA COMPLETA: ENTENDIENDO EL CSS DE TU PROYECTO EN DETALLE
+================================================================================
+
+CSS (Cascading Style Sheets) es el lenguaje que define el diseño visual de tus HTML. 
+En tu proyecto, hemos estructurado el CSS de forma modular. Esta guía te explica 
+cómo funciona cada concepto para que puedas modificar el diseño con seguridad.
+
+--------------------------------------------------------------------------------
+1. ESTRUCTURA BÁSICA DE UNA REGLA CSS
+--------------------------------------------------------------------------------
+Cada regla CSS consta de un "selector" y un "bloque de declaración":
+
+selector {
+    propiedad: valor;
+}
+
+Ejemplo:
+h1 {
+    font-size: 2rem;      /* Tamaño del texto */
+    font-weight: 700;     /* Grosor del texto (negrita) */
+    margin-bottom: 0.5rem; /* Margen inferior */
+}
+
+--------------------------------------------------------------------------------
+2. VARIABLES CSS (`:root` y `var()`)
+--------------------------------------------------------------------------------
+En tu archivo base.css verás la sección `:root`. Esto declara variables globales que 
+guardan valores que se repiten mucho (como colores).
+
+* Declarar una variable (se usa doble guion `--` al inicio):
+  --primary-color: #3b82f6;
+
+* Usar la variable en cualquier archivo CSS (usando la función `var()`):
+  color: var(--primary-color);
+
+* Ventaja: Si en el futuro quieres cambiar el azul de tu página por un verde, solo 
+  cambias el valor en `:root` y automáticamente se actualizará en todo el sitio.
+
+--------------------------------------------------------------------------------
+3. EL RESETEO GLOBAL Y LA CAJA DE DISEÑO (`box-sizing`)
+--------------------------------------------------------------------------------
+Al inicio de base.css se define:
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+* `*`: Selecciona absolutamente todos los elementos del HTML.
+* `margin: 0` y `padding: 0`: Quita los márgenes y rellenos internos que los 
+  navegadores ponen por defecto.
+* `box-sizing: border-box`: Hace que cuando calcules el ancho (width) de una caja, 
+  el borde y el padding estén incluidos dentro de esa medida. Evita que las cajas 
+  se desborden inesperadamente al añadir bordes o relleno.
+
+--------------------------------------------------------------------------------
+4. MODELOS DE DISEÑO (LAYOUTS): GRID Y FLEXBOX
+--------------------------------------------------------------------------------
+Para acomodar los elementos en pantalla de manera moderna y adaptativa:
+
+* FLEXBOX (Diseño unidimensional, alineación en fila o columna):
+  Utilizado en la cabecera de base.html:
+  display: flex;
+  justify-content: space-between; /* Envía el logo a la izquierda y el menú a la derecha */
+  align-items: center;            /* Centra verticalmente ambos elementos */
+  gap: 1rem;                      /* Deja un espacio controlado entre elementos */
+
+* GRID LAYOUT (Diseño bidimensional en rejilla):
+  Utilizado en home.css para listar los botones de módulos:
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  
+  Explicación:
+  - `repeat(auto-fit, ...)`: Le dice a la rejilla que ajuste automáticamente la 
+    cantidad de columnas según el espacio disponible en pantalla.
+  - `minmax(220px, 1fr)`: Cada columna tendrá como mínimo 220 píxeles de ancho y, 
+    si sobra espacio, se expandirán equitativamente (`1fr` = 1 fracción del espacio libre).
+    Esto hace que el menú sea 100% responsivo (se ve bien en móviles y PCs).
+
+--------------------------------------------------------------------------------
+5. ESPACIADOS: MARGIN VS PADDING
+--------------------------------------------------------------------------------
+Es crucial entender la diferencia entre estas dos propiedades:
+* PADDING (Relleno interno): Es el espacio que hay *dentro* del borde del elemento. 
+  Por ejemplo, en un botón, aleja el texto de los bordes del botón.
+* MARGIN (Margen externo): Es el espacio libre que hay *fuera* del borde del 
+  elemento, alejándolo de otros elementos vecinos.
+
+--------------------------------------------------------------------------------
+6. PSEUDOCLASES INTERACTIVAS (`:hover`, `:active`, `:focus`)
+--------------------------------------------------------------------------------
+Permiten cambiar el diseño de un elemento cuando el usuario interactúa con él:
+
+* `:hover` (Pasar el cursor por encima):
+  ul li:hover { background-color: #e2e8f0; } /* Cambia el fondo al pasar el mouse */
+
+* `:active` (Hacer clic sobre el elemento):
+  button:active { transform: scale(0.98); }  /* El botón se achica un poco al pulsarlo */
+
+* `:focus` (Tener el elemento seleccionado/activo, ej. al escribir en un input):
+  input:focus { border-color: var(--primary-color); }
+
+--------------------------------------------------------------------------------
+7. TRANSICIONES (`transition`)
+--------------------------------------------------------------------------------
+Hacen que los cambios de estilo (como el color al hacer hover) no sean bruscos, 
+sino una animación suave.
+transition: background-color 0.2s ease, transform 0.1s ease;
+
+* `background-color`: Qué propiedad se va a animar.
+* `0.2s`: Cuánto durará la animación (0.2 segundos).
+* `ease`: Curva de aceleración (comienza despacio, se acelera y termina despacio).
+
+--------------------------------------------------------------------------------
+8. SELECTORES ESPECÍFICOS DE FORMULARIOS
+--------------------------------------------------------------------------------
+En profesor.css verás:
+input[type="text"], input[type="number"], select, textarea { ... }
+
+Esto te permite aplicar estilos en masa únicamente a los controles de formulario 
+especificados, sin afectar a otros elementos input como los de tipo checkbox o submit.
+================================================================================
