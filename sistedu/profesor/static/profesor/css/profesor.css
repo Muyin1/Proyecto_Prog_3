@@ -1,0 +1,111 @@
+/* Tablas estilizadas (exclusivo para Listado de Profesores) */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.95rem;
+}
+
+th,
+td {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    vertical-align: middle;
+}
+
+th {
+    background-color: #f8fafc;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+/* Burbujas de Avatar */
+.avatar-bubble {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.8rem;
+    color: #ffffff;
+    text-transform: uppercase;
+    flex-shrink: 0;
+}
+
+.avatar-color-1 { background-color: #1e3a8a; } /* azul oscuro */
+.avatar-color-2 { background-color: #475569; } /* gris pizarra */
+.avatar-color-3 { background-color: #0f766e; } /* verde azulado */
+.avatar-color-4 { background-color: #4338ca; } /* índigo */
+
+/* Etiquetas de Estado (Badges) */
+.status-badge {
+    display: inline-block;
+    padding: 0.2rem 0.65rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+.status-planta {
+    background-color: #eff6ff;
+    color: #1d4ed8;
+}
+
+.status-interino {
+    background-color: #e0f2fe;
+    color: #0369a1;
+}
+
+.status-suplente {
+    background-color: #f3f4f6;
+    color: #4b5563;
+}
+
+/* Formularios (exclusivos para ABM de Profesor) */
+form {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+form p {
+    margin-bottom: 1.2rem;
+}
+
+label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 0.4rem;
+    color: var(--text-main);
+}
+
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="password"],
+select,
+textarea {
+    width: 100%;
+    padding: 0.6rem 0.8rem;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 0.95rem;
+    color: var(--text-main);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+/* Acciones en línea (como en tablas) */
+.actions a {
+    font-weight: 500;
+    margin: 0 0.3rem;
+}

@@ -1,32 +1,13 @@
-<!DOCTYPE html>
-<html lang="es">
+{% extends 'base.html' %}
+{% load static %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>Inicio - Sistema Educativo</title>
-</head>
+{% block title %}Inicio - SistEdu{% endblock %}
 
-<body>
-    <h1>Sistema de Gestión Educativa</h1>
-
-    <h2>Módulos del Sistema:</h2>
-    <ul>
-        <li>
-            <a href="/profesores/">
-                <button type="button">Gestionar Profesores</button>
-            </a>
-        </li>
-        <li>
-            <a href="/carreras/">
-                <button type="button">Gestionar Carreras</button>
-            </a>
-        </li>
-        <li>
-            <a href="/materias/">
-                <button type="button">Gestionar Materias</button>
-            </a>
-        </li>
-    </ul>
-</body>
-
-</html>
+{% block content %}
+<div style="text-align: center; padding: 5rem 1.5rem;">
+    <a href="{% url 'profesor_list' %}" class="btn"
+        style="background-color: var(--primary-color); padding: 0.95rem 2.5rem; font-size: 1.15rem; font-weight: 600; border-radius: 8px; display: inline-flex; align-items: center; gap: 0.6rem; color: white; box-shadow: 0 4px 10px -1px rgba(59, 130, 246, 0.25); text-decoration: none;">
+        <span>Gestionar Profesores</span>
+    </a>
+</div>
+{% endblock %}

@@ -1,20 +1,26 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ titulo_pagina }}</title>
-</head>
-<body>
-    <h1>{{ titulo_pagina }}</h1>
-    
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Guardar</button>
-    </form>
-    
-    <p>
-        <a href="{% url 'profesor_list' %}">Volver al listado</a>
-    </p>
-</body>
-</html>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ titulo_pagina }} - SistEdu{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'profesor/css/profesor.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div style="margin-bottom: 2rem;">
+        <h1 style="border-bottom: none; padding-bottom: 0; margin-bottom: 0.25rem; font-size: 2rem; font-weight: 700;">{{ titulo_pagina }}</h1>
+        <p style="color: var(--text-muted); margin: 0; font-size: 0.95rem;">Ingresa los datos del perfil del profesor para guardar los cambios.</p>
+    </div>
+
+    <div class="container" style="max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 2.25rem; border-radius: 12px; border: 1px solid var(--border-color); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);">
+        <form method="post" style="margin: 0;">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div style="margin-top: 2.25rem; display: flex; gap: 1rem;">
+                <button type="submit" class="btn" style="background-color: #0f172a; padding: 0.65rem 1.5rem; font-weight: 600;">Guardar</button>
+                <a href="{% url 'profesor_list' %}" class="btn btn-secondary" style="padding: 0.65rem 1.5rem; background-color: #ffffff; color: var(--text-muted); border: 1px solid var(--border-color); font-weight: 500;">Cancelar</a>
+            </div>
+        </form>
+    </div>
+{% endblock %}
