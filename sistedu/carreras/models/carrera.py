@@ -1,10 +1,7 @@
 from django.db import models
 
 class Carrera(models.Model):
-    """
-    Representa una Carrera o Título de Grado ofrecido por la institución (ej. Tecnicatura en Desarrollo de Software).
-    Responsabilidad única: Gestionar los metadatos estructurales de la oferta educativa de grado y su director asignado.
-    """
+
     nombre = models.CharField(max_length=150, verbose_name="Nombre de la Carrera")
     codigo = models.CharField(max_length=20, unique=True, verbose_name="Código de Carrera")
     descripcion = models.TextField(blank=True, null=True, verbose_name="Descripción")

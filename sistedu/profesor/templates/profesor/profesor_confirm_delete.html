@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Eliminar Profesor - SistEdu{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'profesor/css/profesor.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div style="margin-bottom: 2rem;">
+        <h1 style="border-bottom: none; padding-bottom: 0; margin-bottom: 0.25rem; font-size: 2rem; font-weight: 700; color: var(--danger-color);">Eliminar Profesor</h1>
+        <p style="color: var(--text-muted); margin: 0; font-size: 0.95rem;">Se requiere confirmación antes de eliminar el registro.</p>
+    </div>
+
+    <div class="container" style="max-width: 500px; margin: 0 auto; background-color: #ffffff; padding: 2.25rem; border-radius: 12px; border: 1px solid var(--border-color); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); text-align: center;">
+        <div style="width: 56px; height: 56px; border-radius: 50%; background-color: #fef2f2; color: var(--danger-color); display: inline-flex; align-items: center; justify-content: center; margin-bottom: 1.25rem;">
+            <i data-lucide="alert-triangle" style="width: 28px; height: 28px;"></i>
+        </div>
+        
+        <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.75rem; color: var(--text-main);">¿Estás completamente seguro?</h3>
+        
+        <p style="margin-bottom: 2rem; font-size: 0.95rem; color: var(--text-muted); line-height: 1.6;">
+            Estás a punto de eliminar al profesor <strong>{{ profesor.nombre }} {{ profesor.apellido }}</strong>. 
+            Esta acción no se puede deshacer.
+        </p>
+        
+        <form method="post" style="margin: 0; display: inline-block; width: 100%;">
+            {% csrf_token %}
+            <div style="display: flex; gap: 1rem; justify-content: center;">
+                <button type="submit" class="btn btn-danger" style="padding: 0.65rem 1.5rem; font-weight: 600; background-color: var(--danger-color);">Eliminar</button>
+                <a href="{% url 'profesor_list' %}" class="btn btn-secondary" style="padding: 0.65rem 1.5rem; background-color: #ffffff; color: var(--text-muted); border: 1px solid var(--border-color); font-weight: 500;">Cancelar</a>
+            </div>
+        </form>
+    </div>
+{% endblock %}
