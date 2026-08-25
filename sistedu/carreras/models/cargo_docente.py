@@ -6,9 +6,9 @@ class CargoDocente(models.Model):
     Representa un cargo institucional, de gestión, investigación o extensión asignado a un profesor dentro de una Carrera.
     Responsabilidad única: Administrar el historial de cargos y resoluciones de los docentes en la carrera (ej. Director de Tesis, Director de Proyectos, Coordinador).
     """
-    # Se referencia por string 'authentication.Profesor' para evitar dependencias directas de carga.
+    # Se referencia por string 'profesor.Profesor' para evitar dependencias directas de carga.
     profesor = models.ForeignKey(
-        'authentication.Profesor', 
+        'profesor.Profesor', 
         on_delete=models.CASCADE, 
         related_name='cargos_docentes',
         verbose_name="Docente"

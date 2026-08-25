@@ -9,10 +9,10 @@ class Carrera(models.Model):
     codigo = models.CharField(max_length=20, unique=True, verbose_name="Código de Carrera")
     descripcion = models.TextField(blank=True, null=True, verbose_name="Descripción")
     
-    # Se referencia por string 'authentication.Profesor' para evitar acoplamiento fuerte e importaciones circulares.
+    # Se referencia por string 'profesor.Profesor' para evitar acoplamiento fuerte e importaciones circulares.
     # El director es un profesor asignado al cargo de conducción académica de la carrera.
     director = models.ForeignKey(
-        'authentication.Profesor', 
+        'profesor.Profesor', 
         on_delete=models.SET_NULL, 
         null=True, 
         blank=True, 

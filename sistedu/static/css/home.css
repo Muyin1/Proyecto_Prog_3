@@ -1,0 +1,25 @@
+/* Estilos de Listas y Menú Principal (exclusivos del Home) */
+ul {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+ul li {
+    background: #f1f5f9;
+    padding: 1.2rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    text-align: center;
+    transition: background-color 0.2s ease;
+}
+
+ul li:hover {
+    background-color: #e2e8f0;
+}
+
+ul li a button {
+    width: 100%;
+}

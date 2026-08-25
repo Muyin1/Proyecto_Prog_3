@@ -1,0 +1,139 @@
+================================================================================
+GUÍA COMPLETA: CÓMO FUNCIONAN LOS ARCHIVOS HTML Y TEMPLATES EN DJANGO
+================================================================================
+
+En Django, las plantillas HTML no son simples archivos estáticos, sino que utilizan el 
+motor de plantillas de Django para permitir herencia, modularidad y dinamismo.
+
+A continuación, tienes la explicación detallada de cómo funcionan internamente y 
+cómo se conectan para que puedas ir modificando cada parte:
+
+--------------------------------------------------------------------------------
+1. EL CONCEPTO DE HERENCIA (`extends` y `block`)
+--------------------------------------------------------------------------------
+Para evitar repetir el mismo código HTML (cabeceras, menús, scripts, enlaces a CSS) 
+en cada página, Django usa el principio de herencia.
+
+* LA PLANTILLA BASE (base.html): 
+  Define la estructura "esqueleto" de tu aplicación (la etiqueta <html>, <head>, 
+  la barra de navegación <header> y el pie de página). Dentro de ella se definen 
+  "huecos" usando las etiquetas de bloque:
+  
+  {% block NOMBRE %}{% endblock %}
+
+  Por ejemplo:
+  <head>
+      ...
+      {% block extra_css %}{% endblock %} <!-- Hueco para CSS específicos -->
+  </head>
+  <body>
+      <div class="container">
+          <main>
+              {% block content %}{% endblock %} <!-- Hueco para el contenido principal -->
+          </main>
+      </div>
+  </body>
+
+* LAS PLANTILLAS HIJAS (ej. home.html, profesor_list.html):
+  Comienzan indicando que heredan de la base:
+  
+  {% extends 'base.html' %}
+
+  Luego, "llenan" los bloques que deseen sobrescribir. Por ejemplo:
+  
+  {% block content %}
+      <h1>Sistema de Gestión Educativa</h1>
+      <p>Aquí va el contenido específico de esta página...</p>
+  {% endblock %}
+
+Cuando un usuario accede a la web, Django toma la base, incrusta las secciones del 
+hijo en los bloques correspondientes, y devuelve una sola página HTML completa.
+
+--------------------------------------------------------------------------------
+2. ARCHIVOS ESTÁTICOS (`{% load static %}`)
+--------------------------------------------------------------------------------
+Para enlazar archivos como hojas de estilos CSS (.css), archivos JavaScript (.js) 
+o imágenes:
+
+* Primero debes indicarle al motor que use la librería de estáticos colocando 
+  esta línea al principio del archivo (debajo del extends):
+  
+  {% load static %}
+
+* Luego, usas la función de estáticos para resolver la ruta:
+  
+  {% static 'ruta/al/archivo' %}
+
+  Ejemplo para enlazar tu CSS global y específico:
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+
+--------------------------------------------------------------------------------
+3. ENLACES DINÁMICOS (`{% url 'nombre_de_ruta' %}`)
+--------------------------------------------------------------------------------
+En lugar de escribir enlaces fijos como <a href="/profesores/nuevo/">, Django te permite 
+resolver las URLs de forma dinámica usando el nombre que les diste en urls.py:
+
+* Para una URL simple:
+  <a href="{% url 'profesor_create' %}">Registrar Nuevo Profesor</a>
+
+* Para una URL que requiere un parámetro (por ejemplo, el ID del profesor a editar):
+  <a href="{% url 'profesor_update' profesor.pk %}">Editar</a>
+  
+  (Donde profesor.pk es la clave primaria o ID de ese registro en la base de datos).
+
+--------------------------------------------------------------------------------
+4. MOSTRAR DATOS DE LA BASE DE DATOS (`{{ variable }}` y Bucles)
+--------------------------------------------------------------------------------
+Desde la vista (views.py) en Python se envían variables a la plantilla HTML.
+
+* VARIABLES SIMPLES:
+  Se muestran encerrándolas entre llaves dobles:
+  
+  {{ variable }}
+  
+  Ejemplo: <h1>{{ titulo_pagina }}</h1> o <strong>{{ profesor.nombre }}</strong>.
+
+* BUCLES (`for`):
+  Si se recibe una lista de elementos, puedes iterar sobre ellos y pintar una fila 
+  de tabla o una lista para cada uno:
+  
+  {% for profesor in profesores %}
+      <tr>
+          <td>{{ profesor.nombre }}</td>
+          <td>{{ profesor.apellido }}</td>
+      </tr>
+  {% empty %}
+      <!-- Este bloque se muestra si la lista está vacía -->
+      <tr>
+          <td colspan="5">No hay profesores registrados.</td>
+      </tr>
+  {% endfor %}
+
+--------------------------------------------------------------------------------
+5. FORMULARIOS Y SEGURIDAD (`csrf_token`)
+--------------------------------------------------------------------------------
+En cualquier formulario de tipo POST que envíe información al servidor, Django 
+requiere seguridad:
+
+* CSRF TOKEN:
+  Debes colocar la siguiente etiqueta justo dentro de la etiqueta <form>:
+  
+  {% csrf_token %}
+  
+  Esto inserta un campo oculto con un token seguro. Si no lo pones, Django 
+  rechazará la solicitud por motivos de seguridad al hacer clic en enviar.
+
+* RENDERIZADO DEL FORMULARIO:
+  Puedes pintar de forma automatizada todos los campos del formulario con:
+  
+  {{ form.as_p }}
+  
+  (Pinta los campos estructurados en etiquetas de párrafo <p>).
+  
+  Ejemplo completo de formulario:
+  <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Guardar</button>
+  </form>
+================================================================================

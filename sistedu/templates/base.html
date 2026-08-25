@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}SistEdu - Gestión Académica{% endblock %}</title>
+    <!-- Vinculación del CSS propio/personalizado -->
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+    <!-- Top Horizontal Navigation -->
+    <header>
+        <div class="nav-container">
+            <a href="{% url 'home' %}" class="logo">
+                <i data-lucide="school" style="width: 24px; height: 24px;"></i>
+                <span>SistEdu</span>
+            </a>
+            <nav class="nav-links">
+                <a href="{% url 'home' %}" class="nav-item {% if request.path == '/' %}active{% endif %}">
+                    <span>Inicio</span>
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Workspace Content -->
+    <main class="content-container">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        // Initialize lucide icons
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>
